@@ -1,25 +1,52 @@
+/* === Общие стили для всех страниц === */
 body {
   font-family: Arial, sans-serif;
-  max-width: 600px;
+  max-width: 800px;
   margin: 40px auto;
   padding: 20px;
-  background: #fafafa;
   text-align: center;
+  background: #fafafa;
+  color: #333;
 }
 
 h1 {
-  color: #2c3e50;
+  color: #2c3e50; /* тёмный цвет для всех страниц */
 }
 
+/* На главной странице (с фоном) делаем светлым */
+body.home h1 {
+  color: #f1f1f1; /* светлый */
+}
+
+/* === Блок с кнопками/контентом по умолчанию (центровка) === */
+.overlay {
+  background: rgba(0, 0, 0, 0.6);
+  padding: 20px 30px;
+  border-radius: 12px;
+  display: inline-block;
+  text-align: center;
+  margin: 20px auto;
+}
+
+/* === Кнопки меню === */
 .menu button {
   display: block;
-  margin: 10px auto;
-  padding: 10px 20px;
-  font-size: 18px;
-  border-radius: 8px;
+  margin: 8px auto;
+  padding: 8px 16px;
+  font-size: 16px;
+  border-radius: 6px;
   cursor: pointer;
+  border: none;
+  background: #e0e0e0;
+  color: #000;
+  transition: 0.3s;
 }
 
+.menu button:hover {
+  background: #d0e6ff;
+}
+
+/* === Вопросы === */
 .question {
   margin: 20px 0;
   padding: 15px;
@@ -34,4 +61,21 @@ button.correct {
 
 button.wrong {
   background: #f7c5c5 !important;
+}
+
+/* === Специальные стили только для главной === */
+body.home {
+  background: url("background.jpg") no-repeat center center fixed;
+  background-size: contain;
+  background-color: #000;
+  color: #fff;
+  margin: 0;
+  height: 100vh;
+  position: relative;
+}
+
+body.home .overlay {
+  position: absolute;
+  top: 100px;   /* сдвиг вниз */
+  left: 800px;  /* сдвиг вправо */
 }

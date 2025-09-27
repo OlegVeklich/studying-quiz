@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Тест — История</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Тест по истории</h1>
+  <div id="quiz"></div>
+  <div id="info"></div>
+  <script src="script.js"></script>
+  <script>
+    // читаем выбранную тему из параметров URL
+    const params = new URLSearchParams(window.location.search);
+    const topic = params.get("topic") || "all";
+    startHistoryQuiz(topic);
+  </script>
+</body>
+</html>
