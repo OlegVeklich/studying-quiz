@@ -63,7 +63,7 @@ async function startHistoryQuiz(topic) {
           infoDiv.innerHTML = `<p><b>Верно:</b> ${q.info}</p>`;
         } else {
           btn.classList.add("wrong");
-          infoDiv.innerHTML = `<p><b>Неверно!</b></p>`;
+          infoDiv.innerHTML = `<p><b>Неверно!</b> Правильный ответ: <u>${q.options[q.correct]}</u></p>`;
         }
 
         // Кнопка "следующий вопрос" или "завершить тест"
