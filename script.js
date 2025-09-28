@@ -83,3 +83,87 @@ async function startHistoryQuiz(topic) {
 
   showQuestion(0);
 }
+/**
+ * Загружаем вопросы по картинам
+ */
+async function loadPaintings() {
+  const response = await fetch("questions_art.json");
+  return await response.json();
+}
+
+/**
+ * Квиз по картинам (три вопроса на одну картину)
+ */
+async function startArtQuiz() {
+  const quizDiv = document.getElementById("quiz");
+  const infoDiv = document.getElementById("info");
+
+  const allData = await loadPaintings();
+  const paintings = allData.paintings;
+  let currentPainting = 0;
+  let currentQuestion = 0;
+
+  function showQuestion() {
+    quizDiv.innerHTML = "";
+    infoDiv.innerHTML = "";
+
+    if (currentPainting >= paintings.length) {
+      quizDiv.innerHTML = `
+        <h2>Все картины пройдены!</h2>
+        <button onclick="location.href='art.html'">Искусство</button>
+        <button onclick="location.href='index.html'">Главная страница</button>
+      `;
+      return;
+    }
+
+    const painting = paintings[currentPainting];
+    const q = painting.questions[currentQuestion];
+
+    const div = document.createElement("div");
+    div.className = "question";
+
+    let content = `<img src="${painting.image}" alt="Картина" style="max-width:300px; display:block; margin:10px auto;">`;
+    content += `<h3>${q.text}</h3>`;
+    div.innerHTML = content;
+
+    q.options.forEach((opt, idx) => {
+      const btn = document.createElement("button");
+      btn.innerText = opt;
+      btn.onclick = () => {
+        if (idx === q.correct) {
+          btn.classList.add("correct");
+          infoDiv.innerHTML = `<p><b>Верно:</b> ${q.info}</p>`;
+        } else {
+          btn.classList.add("wrong");
+          infoDiv.innerHTML = `<p><b>Неверно!</b> Правильный ответ: <u>${q.options[q.correct]}</u><br>${q.info}</p>`;
+        }
+
+        // Если это третий вопрос → "Следующая картина"
+        // Иначе → "Следующий вопрос"
+        const nextBtn = document.createElement("button");
+        if (currentQuestion === painting.questions.length - 1) {
+          nextBtn.innerText = "Следующая картина";
+          nextBtn.onclick = () => {
+            currentPainting++;
+            currentQuestion = 0;
+            showQuestion();
+          };
+        } else {
+          nextBtn.innerText = "Следующий вопрос";
+          nextBtn.onclick = () => {
+            currentQuestion++;
+            showQuestion();
+          };
+        }
+        infoDiv.appendChild(nextBtn);
+
+        Array.from(div.querySelectorAll("button")).forEach(b => b.disabled = true);
+      };
+      div.appendChild(btn);
+    });
+
+    quizDiv.appendChild(div);
+  }
+
+  showQuestion();
+}
