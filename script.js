@@ -98,7 +98,11 @@ async function startArtQuiz() {
   const quizDiv = document.getElementById("quiz");
 
   const allData = await loadPaintings();
-  const paintings = allData.paintings;
+  let paintings = allData.paintings;
+
+  // перемешиваем и берём только 10 случайных картин
+  paintings = paintings.sort(() => Math.random() - 0.5).slice(0, 10);
+
   let currentPainting = 0;
 
   function showPainting() {
@@ -130,7 +134,7 @@ async function startArtQuiz() {
       div.className = "question";
       div.innerHTML = `<h3>${q.text}</h3>`;
 
-      const feedback = document.createElement("div"); // сюда будет писаться Верно/Неверно
+      const feedback = document.createElement("div"); // индивидуальный блок для ответа
 
       q.options.forEach((opt, idx) => {
         const btn = document.createElement("button");
@@ -144,10 +148,11 @@ async function startArtQuiz() {
             feedback.innerHTML = `<p><b>Неверно!</b> Правильный ответ: <u>${q.options[q.correct]}</u><br>${q.info}</p>`;
           }
 
-          // блокируем кнопки только этого вопроса
+          // блокируем кнопки этого вопроса
           Array.from(div.querySelectorAll("button")).forEach(b => b.disabled = true);
 
           answeredCount++;
+          // когда на все вопросы картины ответили → показать кнопку
           if (answeredCount === painting.questions.length) {
             const nextBtn = document.createElement("button");
             nextBtn.innerText = "Следующая картина";
