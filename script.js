@@ -96,7 +96,6 @@ async function loadPaintings() {
  */
 async function startArtQuiz() {
   const quizDiv = document.getElementById("quiz");
-  const infoDiv = document.getElementById("info");
 
   const allData = await loadPaintings();
   const paintings = allData.paintings;
@@ -104,7 +103,6 @@ async function startArtQuiz() {
 
   function showPainting() {
     quizDiv.innerHTML = "";
-    infoDiv.innerHTML = "";
 
     if (currentPainting >= paintings.length) {
       quizDiv.innerHTML = `
@@ -117,20 +115,22 @@ async function startArtQuiz() {
 
     const painting = paintings[currentPainting];
 
-    // картинка
+    // картинка (увеличенная)
     const img = document.createElement("img");
     img.src = painting.image;
     img.alt = "Картина";
-    img.style = "max-width:300px; display:block; margin:10px auto;";
+    img.style = "max-width:600px; display:block; margin:10px auto;";
     quizDiv.appendChild(img);
 
     let answeredCount = 0;
 
     // вопросы по картине
-    painting.questions.forEach((q, qIndex) => {
+    painting.questions.forEach((q) => {
       const div = document.createElement("div");
       div.className = "question";
       div.innerHTML = `<h3>${q.text}</h3>`;
+
+      const feedback = document.createElement("div"); // сюда будет писаться Верно/Неверно
 
       q.options.forEach((opt, idx) => {
         const btn = document.createElement("button");
@@ -138,17 +138,16 @@ async function startArtQuiz() {
         btn.onclick = () => {
           if (idx === q.correct) {
             btn.classList.add("correct");
-            infoDiv.innerHTML += `<p><b>Верно:</b> ${q.info}</p>`;
+            feedback.innerHTML = `<p><b>Верно:</b> ${q.info}</p>`;
           } else {
             btn.classList.add("wrong");
-            infoDiv.innerHTML += `<p><b>Неверно!</b> Правильный ответ: <u>${q.options[q.correct]}</u><br>${q.info}</p>`;
+            feedback.innerHTML = `<p><b>Неверно!</b> Правильный ответ: <u>${q.options[q.correct]}</u><br>${q.info}</p>`;
           }
 
-          // блокируем другие кнопки этого вопроса
+          // блокируем кнопки только этого вопроса
           Array.from(div.querySelectorAll("button")).forEach(b => b.disabled = true);
 
           answeredCount++;
-          // если все вопросы отвечены → показать кнопку "Следующая картина"
           if (answeredCount === painting.questions.length) {
             const nextBtn = document.createElement("button");
             nextBtn.innerText = "Следующая картина";
@@ -156,12 +155,13 @@ async function startArtQuiz() {
               currentPainting++;
               showPainting();
             };
-            infoDiv.appendChild(nextBtn);
+            quizDiv.appendChild(nextBtn);
           }
         };
         div.appendChild(btn);
       });
 
+      div.appendChild(feedback);
       quizDiv.appendChild(div);
     });
   }
