@@ -101,9 +101,8 @@ async function startArtQuiz() {
   const allData = await loadPaintings();
   const paintings = allData.paintings;
   let currentPainting = 0;
-  let currentQuestion = 0;
 
-  function showQuestion() {
+  function showPainting() {
     quizDiv.innerHTML = "";
     infoDiv.innerHTML = "";
 
@@ -117,53 +116,55 @@ async function startArtQuiz() {
     }
 
     const painting = paintings[currentPainting];
-    const q = painting.questions[currentQuestion];
 
-    const div = document.createElement("div");
-    div.className = "question";
+    // картинка
+    const img = document.createElement("img");
+    img.src = painting.image;
+    img.alt = "Картина";
+    img.style = "max-width:300px; display:block; margin:10px auto;";
+    quizDiv.appendChild(img);
 
-    let content = `<img src="${painting.image}" alt="Картина" style="max-width:300px; display:block; margin:10px auto;">`;
-    content += `<h3>${q.text}</h3>`;
-    div.innerHTML = content;
+    let answeredCount = 0;
 
-    q.options.forEach((opt, idx) => {
-      const btn = document.createElement("button");
-      btn.innerText = opt;
-      btn.onclick = () => {
-        if (idx === q.correct) {
-          btn.classList.add("correct");
-          infoDiv.innerHTML = `<p><b>Верно:</b> ${q.info}</p>`;
-        } else {
-          btn.classList.add("wrong");
-          infoDiv.innerHTML = `<p><b>Неверно!</b> Правильный ответ: <u>${q.options[q.correct]}</u><br>${q.info}</p>`;
-        }
+    // вопросы по картине
+    painting.questions.forEach((q, qIndex) => {
+      const div = document.createElement("div");
+      div.className = "question";
+      div.innerHTML = `<h3>${q.text}</h3>`;
 
-        // Если это третий вопрос → "Следующая картина"
-        // Иначе → "Следующий вопрос"
-        const nextBtn = document.createElement("button");
-        if (currentQuestion === painting.questions.length - 1) {
-          nextBtn.innerText = "Следующая картина";
-          nextBtn.onclick = () => {
-            currentPainting++;
-            currentQuestion = 0;
-            showQuestion();
-          };
-        } else {
-          nextBtn.innerText = "Следующий вопрос";
-          nextBtn.onclick = () => {
-            currentQuestion++;
-            showQuestion();
-          };
-        }
-        infoDiv.appendChild(nextBtn);
+      q.options.forEach((opt, idx) => {
+        const btn = document.createElement("button");
+        btn.innerText = opt;
+        btn.onclick = () => {
+          if (idx === q.correct) {
+            btn.classList.add("correct");
+            infoDiv.innerHTML += `<p><b>Верно:</b> ${q.info}</p>`;
+          } else {
+            btn.classList.add("wrong");
+            infoDiv.innerHTML += `<p><b>Неверно!</b> Правильный ответ: <u>${q.options[q.correct]}</u><br>${q.info}</p>`;
+          }
 
-        Array.from(div.querySelectorAll("button")).forEach(b => b.disabled = true);
-      };
-      div.appendChild(btn);
+          // блокируем другие кнопки этого вопроса
+          Array.from(div.querySelectorAll("button")).forEach(b => b.disabled = true);
+
+          answeredCount++;
+          // если все вопросы отвечены → показать кнопку "Следующая картина"
+          if (answeredCount === painting.questions.length) {
+            const nextBtn = document.createElement("button");
+            nextBtn.innerText = "Следующая картина";
+            nextBtn.onclick = () => {
+              currentPainting++;
+              showPainting();
+            };
+            infoDiv.appendChild(nextBtn);
+          }
+        };
+        div.appendChild(btn);
+      });
+
+      quizDiv.appendChild(div);
     });
-
-    quizDiv.appendChild(div);
   }
 
-  showQuestion();
+  showPainting();
 }
