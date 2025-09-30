@@ -1,7 +1,7 @@
 {
   "paintings": [
     {
-      "image": "cythere.png",
+      "image": "pictures/cythere.png",
       "questions": [
         {
           "text": "Как называется эта картина",
@@ -39,7 +39,7 @@
       ]
     },
     {
-      "image": "death_marat.png",
+      "image": "pictures/death_marat.png",
       "questions": [
         {
           "text": "Как называется эта картина",
@@ -77,7 +77,7 @@
       ]
     },
     {
-      "image": "death_socrat.png",
+      "image": "pictures/death_socrat.png",
       "questions": [
         {
           "text": "Как называется эта картина",
@@ -115,7 +115,7 @@
       ]
     },
     {
-      "image": "gersaint.png",
+      "image": "pictures/gersaint.png",
       "questions": [
         {
           "text": "Как называется эта картина",
@@ -153,7 +153,7 @@
       ]
     },
     {
-      "image": "gilles.png",
+      "image": "pictures/gilles.png",
       "questions": [
         {
           "text": "Как называется эта картина",
@@ -191,7 +191,7 @@
       ]
     },
     {
-      "image": "goracio.png",
+      "image": "pictures/goracio.png",
       "questions": [
         {
           "text": "Как называется эта картина",
@@ -229,7 +229,7 @@
       ]
     },
     {
-      "image": "napoleon_alph.png",
+      "image": "pictures/napoleon_alph.png",
       "questions": [
         {
           "text": "Как называется эта картина",
@@ -267,7 +267,7 @@
       ]
     },
     {
-      "image": "napoleon_corona.png",
+      "image": "pictures/napoleon_corona.png",
       "questions": [
         {
           "text": "Как называется эта картина",
@@ -305,7 +305,7 @@
       ]
     },
     {
-      "image": "night_cafe.png",
+      "image": "pictures/night_cafe.png",
       "questions": [
         {
           "text": "Как называется эта картина",
@@ -343,7 +343,7 @@
       ]
     },
     {
-      "image": "pleasures of life.png",
+      "image": "pictures/pleasures of life.png",
       "questions": [
         {
           "text": "Как называется эта картина",
@@ -381,7 +381,7 @@
       ]
     },
     {
-      "image": "potato_eaters.png",
+      "image": "pictures/potato_eaters.png",
       "questions": [
         {
           "text": "Как называется эта картина",
@@ -419,7 +419,7 @@
       ]
     },
     {
-      "image": "redvineyard.png",
+      "image": "pictures/redvineyard.png",
       "questions": [
         {
           "text": "Как называется эта картина",
@@ -457,7 +457,7 @@
       ]
     },
     {
-      "image": "starry_night.png",
+      "image": "pictures/starry_night.png",
       "questions": [
         {
           "text": "Как называется эта картина",
@@ -495,7 +495,7 @@
       ]
     },
     {
-      "image": "sunflowers.png",
+      "image": "pictures/sunflowers.png",
       "questions": [
         {
           "text": "Как называется эта картина",
