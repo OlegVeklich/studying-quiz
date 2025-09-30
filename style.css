@@ -109,3 +109,35 @@ body.home .overlay {
   top: 100px;   /* сдвиг вниз */
   left: 800px;  /* сдвиг вправо */
 }
+
+/* === Адаптивность для мобильных === */
+@media (max-width: 768px) {
+  body.home .overlay {
+    position: static; /* убираем фиксированные координаты */
+    margin: 40px auto;
+    display: block;
+    width: 90%; /* почти вся ширина */
+  }
+
+  .menu button {
+    font-size: 20px;   /* крупнее текст */
+    padding: 14px 20px; /* больше зона нажатия */
+    width: 100%;       /* растягиваем на всю ширину блока */
+  }
+
+  h1 {
+    font-size: 28px; /* уменьшить заголовок, чтобы влезал */
+    margin-bottom: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .menu button {
+    font-size: 22px;
+    padding: 16px 24px;
+  }
+
+  h1 {
+    font-size: 24px;
+  }
+}
