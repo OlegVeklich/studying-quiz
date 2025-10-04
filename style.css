@@ -112,51 +112,44 @@ body.home .overlay {
 
 /* === Адаптивность для мобильных === */
 @media (max-width: 768px) {
-  /* Центрируем блок на главной */
+  /* Главная: убираем фиксированные координаты и центрируем блок */
   body.home .overlay {
-    position: static;
-    margin: 40px auto;
-    display: block;
-    width: 90%; /* почти вся ширина экрана */
+    position: static !important;
+    width: min(520px, 92%) !important;
+    margin: 18vh auto 24px !important; /* ниже и по центру */
     text-align: center;
+    padding: 16px 18px;
   }
 
-  /* Кнопки меню на главной */
+  /* Кнопки меню (главная) — крупные и на всю ширину */
   .menu button {
-    font-size: 20px;   /* крупнее текст */
-    padding: 14px 20px; /* больше зона нажатия */
-    width: 100%;       /* растягиваем на ширину блока */
-    margin: 12px 0;    /* больше отступов */
+    width: 100% !important;
+    font-size: 20px !important;
+    padding: 14px 20px !important;
+    margin: 12px 0 !important;
   }
 
-  /* Заголовок на главной */
+  /* Заголовок меньше, чтобы не ломал вёрстку */
   h1 {
     font-size: 26px;
-    margin-bottom: 20px;
+    margin-bottom: 16px;
   }
 
-  /* Кнопки ответов в тестах */
+  /* Варианты ответов в тестах — столбиком и крупнее */
   .question button {
-    display: block;     /* каждая кнопка на новой строке */
-    width: 100%;        /* во всю ширину */
-    font-size: 18px;    /* крупнее */
-    padding: 12px;      /* удобный тап */
-    margin: 8px 0;      /* отступы */
+    display: block;
+    width: 100%;
+    font-size: 18px;
+    padding: 12px;
+    margin: 8px 0;
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 420px) {
   .menu button {
-    font-size: 22px;
-    padding: 16px 24px;
+    font-size: 22px !important;
+    padding: 16px 24px !important;
   }
-
-  h1 {
-    font-size: 22px;
-  }
-
-  .question button {
-    font-size: 20px;
-    padding: 14px;
-  }
+  h1 { font-size: 22px; }
+  .question button { font-size: 20px; padding: 14px; }
 }
