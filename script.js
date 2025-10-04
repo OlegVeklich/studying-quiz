@@ -123,7 +123,7 @@ async function startArtQuiz() {
     const img = document.createElement("img");
     img.src = painting.image;
     img.alt = "Картина";
-    img.style = "max-width:600px; display:block; margin:10px auto;";
+    img.className = "quiz-img"; // <-- добавили класс
     quizDiv.appendChild(img);
 
     let answeredCount = 0;
