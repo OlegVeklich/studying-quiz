@@ -112,22 +112,36 @@ body.home .overlay {
 
 /* === Адаптивность для мобильных === */
 @media (max-width: 768px) {
+  /* Центрируем блок на главной */
   body.home .overlay {
-    position: static; /* убираем фиксированные координаты */
+    position: static;
     margin: 40px auto;
     display: block;
-    width: 90%; /* почти вся ширина */
+    width: 90%; /* почти вся ширина экрана */
+    text-align: center;
   }
 
+  /* Кнопки меню на главной */
   .menu button {
     font-size: 20px;   /* крупнее текст */
     padding: 14px 20px; /* больше зона нажатия */
-    width: 100%;       /* растягиваем на всю ширину блока */
+    width: 100%;       /* растягиваем на ширину блока */
+    margin: 12px 0;    /* больше отступов */
   }
 
+  /* Заголовок на главной */
   h1 {
-    font-size: 28px; /* уменьшить заголовок, чтобы влезал */
+    font-size: 26px;
     margin-bottom: 20px;
+  }
+
+  /* Кнопки ответов в тестах */
+  .question button {
+    display: block;     /* каждая кнопка на новой строке */
+    width: 100%;        /* во всю ширину */
+    font-size: 18px;    /* крупнее */
+    padding: 12px;      /* удобный тап */
+    margin: 8px 0;      /* отступы */
   }
 }
 
@@ -138,6 +152,11 @@ body.home .overlay {
   }
 
   h1 {
-    font-size: 24px;
+    font-size: 22px;
+  }
+
+  .question button {
+    font-size: 20px;
+    padding: 14px;
   }
 }
