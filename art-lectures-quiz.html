@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Тест — История искусства</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Тест по истории искусства</h1>
+  <div id="quiz"></div>
+  <div id="info"></div>
+  <script src="script.js"></script>
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const topic = params.get("topic") || "all";
+    startArtHistoryQuiz(topic);
+  </script>
+</body>
+</html>

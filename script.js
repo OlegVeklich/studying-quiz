@@ -1,5 +1,5 @@
 /**
- * Загружаем вопросы из questions.json
+ * Загружаем вопросы из questions.json (раздел История)
  */
 async function loadQuestions() {
   const response = await fetch("questions.json");
@@ -7,7 +7,7 @@ async function loadQuestions() {
 }
 
 /**
- * Получаем вопросы по теме (Греция, Рим или все)
+ * Получаем вопросы по теме (Греция, Рим или вся история)
  */
 function getQuestionsByTopic(allQuestions, topic) {
   let pool = [];
@@ -20,7 +20,7 @@ function getQuestionsByTopic(allQuestions, topic) {
 }
 
 /**
- * Запуск теста
+ * Запуск теста по истории (общий раздел History)
  */
 async function startHistoryQuiz(topic) {
   const quizDiv = document.getElementById("quiz");
@@ -73,6 +73,103 @@ async function startHistoryQuiz(topic) {
         infoDiv.appendChild(nextBtn);
 
         // Блокируем остальные кнопки
+        Array.from(div.querySelectorAll("button")).forEach(b => b.disabled = true);
+      };
+      div.appendChild(btn);
+    });
+
+    quizDiv.appendChild(div);
+  }
+
+  showQuestion(0);
+}
+
+/**
+ * Загружаем вопросы по истории искусства из questions_history_of_art.json
+ */
+async function loadArtHistoryQuestions() {
+  const response = await fetch("questions_history_of_art.json");
+  return await response.json(); // ожидаем объект { topics: [...] }
+}
+
+/**
+ * Получить пул вопросов по теме истории искусства
+ * topic === "ancient_greece" -> только Ancient Greece
+ * topic === "all" или другое -> все темы
+ */
+function getArtHistoryQuestionsByTopic(allData, topic) {
+  const topics = allData.topics || [];
+
+  let questionsPool = [];
+
+  if (topic === "ancient_greece") {
+    const greeceTopic = topics.find(t => t.topic === "Ancient Greece");
+    if (greeceTopic) {
+      questionsPool = greeceTopic.questions;
+    }
+  } else {
+    topics.forEach(t => {
+      if (Array.isArray(t.questions)) {
+        questionsPool = questionsPool.concat(t.questions);
+      }
+    });
+  }
+
+  // Перемешиваем и берём первые 10
+  return questionsPool.sort(() => Math.random() - 0.5).slice(0, 10);
+}
+
+/**
+ * Тест по истории искусства (1 вопрос за раз, 10 случайных)
+ */
+async function startArtHistoryQuiz(topic) {
+  const quizDiv = document.getElementById("quiz");
+  const infoDiv = document.getElementById("info");
+
+  const allData = await loadArtHistoryQuestions();
+  const questions = getArtHistoryQuestionsByTopic(allData, topic);
+
+  function showQuestion(index) {
+    quizDiv.innerHTML = "";
+    infoDiv.innerHTML = "";
+
+    if (index >= questions.length) {
+      quizDiv.innerHTML = `
+        <h2>Тест завершён!</h2>
+        <button onclick="location.href='art-lectures.html'">Лекции по истории искусства</button>
+        <button onclick="location.href='art.html'">Искусство</button>
+        <button onclick="location.href='index.html'">Главная страница</button>
+      `;
+      return;
+    }
+
+    const q = questions[index];
+    const div = document.createElement("div");
+    div.className = "question";
+
+    let content = `<h3>${index + 1}. ${q.text}</h3>`;
+    if (q.image) {
+      content += `<img src="${q.image}" alt="Вопрос" style="max-width:300px; display:block; margin:10px auto;">`;
+    }
+    div.innerHTML = content;
+
+    q.options.forEach((opt, idx) => {
+      const btn = document.createElement("button");
+      btn.innerText = opt;
+      btn.onclick = () => {
+        if (idx === q.correct) {
+          btn.classList.add("correct");
+          infoDiv.innerHTML = `<p><b>Верно:</b> ${q.info}</p>`;
+        } else {
+          btn.classList.add("wrong");
+          infoDiv.innerHTML = `<p><b>Неверно!</b> Правильный ответ: <u>${q.options[q.correct]}</u><br>${q.info}</p>`;
+        }
+
+        const nextBtn = document.createElement("button");
+        nextBtn.innerText = (index + 1 === questions.length) ? "Завершить тест" : "Следующий вопрос";
+        nextBtn.onclick = () => showQuestion(index + 1);
+        infoDiv.appendChild(nextBtn);
+
         Array.from(div.querySelectorAll("button")).forEach(b => b.disabled = true);
       };
       div.appendChild(btn);
