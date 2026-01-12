@@ -99,13 +99,16 @@ async function loadArtHistoryQuestions() {
  */
 function getArtHistoryQuestionsByTopic(allData, topic) {
   const topics = allData.topics || [];
-
   let questionsPool = [];
-
   if (topic === "ancient_greece") {
     const greeceTopic = topics.find(t => t.topic === "Ancient Greece");
     if (greeceTopic) {
       questionsPool = greeceTopic.questions;
+    }
+  } else if (topic === "ancient_rome") {
+    const romeTopic = topics.find(t => t.topic === "Ancient Rome");
+    if (romeTopic) {
+      questionsPool = romeTopic.questions;
     }
   } else {
     topics.forEach(t => {
@@ -114,8 +117,6 @@ function getArtHistoryQuestionsByTopic(allData, topic) {
       }
     });
   }
-
-  // Перемешиваем и берём первые 10
   return questionsPool.sort(() => Math.random() - 0.5).slice(0, 10);
 }
 
